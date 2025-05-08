@@ -19,7 +19,8 @@ const LeaveRequest = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/leave/apply", {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/leave/apply`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

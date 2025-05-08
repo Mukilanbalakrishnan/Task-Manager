@@ -1,113 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import "./TaskAssignment.css";
-
-// const TaskAssignment = () => {
-//   const [task, setTask] = useState("");
-//   const [assignee, setAssignee] = useState("");
-//   const [deadline, setDeadline] = useState("");
-//   const [users, setUsers] = useState([]);
-//   const [taskList, setTaskList] = useState([]);
-
-//   // Fetch users from backend
-//   useEffect(() => {
-//     const fetchUsers = async () => {
-//       try {
-//         const res = await fetch("http://localhost:5000/users");
-//         const data = await res.json();
-//         setUsers(data);
-//       } catch (err) {
-//         console.error("Failed to fetch users:", err);
-//       }
-//     };
-//     fetchUsers();
-//   }, []);
-
-//   const handleAssign = async (e) => {
-//     e.preventDefault();
-
-//     if (task && assignee && deadline) {
-//       try {
-//         const response = await fetch("http://localhost:5000/assign-task", {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify({
-//             task,
-//             username: assignee,
-//             deadline,
-//           }),
-//         });
-
-//         const data = await response.json();
-//         if (response.ok) {
-//           alert(data.message);
-//           setTask("");
-//           setAssignee("");
-//           setDeadline("");
-
-//           // Optional: Refresh task list
-//         } else {
-//           alert(data.message);
-//         }
-//       } catch (error) {
-//         console.error("Task assign error:", error);
-//         alert("Failed to assign task.");
-//       }
-//     }
-//   };
-
-//   return (
-//     <div className="task-assignment">
-//       <h2>Assign Task</h2>
-//       <form onSubmit={handleAssign} className="task-form">
-//         <label>Task Description:</label>
-//         <input
-//           type="text"
-//           value={task}
-//           onChange={(e) => setTask(e.target.value)}
-//           required
-//         />
-
-//         <label>Assign To:</label>
-//         <select
-//           value={assignee}
-//           onChange={(e) => setAssignee(e.target.value)}
-//           required
-//         >
-//           <option value="">-- Select Employee --</option>
-//           {users.map((user) => (
-//             <option key={user._id} value={user.username}>
-//               {user.username} ({user.role})
-//             </option>
-//           ))}
-//         </select>
-
-//         <label>Deadline:</label>
-//         <input
-//           type="date"
-//           value={deadline}
-//           onChange={(e) => setDeadline(e.target.value)}
-//           required
-//         />
-
-//         <button type="submit">Assign Task</button>
-//       </form>
-//       <ul className="task-list">
-//         {taskList.map((t) => (
-//           <li key={t.id}>
-//             <strong>{t.task}</strong> - to {t.assignee} (Due: {t.deadline})
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default TaskAssignment;
-
-
-
 
 
 import React, { useState, useEffect } from "react";
@@ -122,7 +12,7 @@ const TaskAssignment = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("http://localhost:5000/users");
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users`);
         const data = await res.json();
         setUsers(data);
       } catch (err) {
@@ -137,7 +27,7 @@ const TaskAssignment = () => {
 
     if (task && assignee && deadline) {
       try {
-        const response = await fetch("http://localhost:5000/assign-task", {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/assign-task`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

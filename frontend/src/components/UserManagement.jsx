@@ -1,126 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// // import "./UserManagement.css"; // Optional CSS for styling
-
-// const UserManagement = () => {
-//   const [users, setUsers] = useState([]);
-//   const [newUser, setNewUser] = useState({
-//     username: "",
-//     password: "",
-//     role: "",
-//   });
-
-//   // Fetch users from backend
-//   const fetchUsers = async () => {
-//     try {
-//       const res = await axios.get("http://localhost:5000/admin/users");
-//       setUsers(res.data);
-//     } catch (error) {
-//       console.error("Error fetching users:", error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchUsers();
-//   }, []);
-
-//   // Input change handler
-//   const handleInputChange = (e) => {
-//     setNewUser({ ...newUser, [e.target.name]: e.target.value });
-//   };
-
-//   // Add new user
-//   const handleAddUser = async () => {
-//     try {
-//       if (!newUser.username || !newUser.password || !newUser.role) {
-//         alert("All fields are required.");
-//         return;
-//       }
-
-//       await axios.post("http://localhost:5000/admin/users1", newUser);
-//       fetchUsers();
-//       setNewUser({ username: "", password: "", role: "" });
-//     } catch (error) {
-//       console.error("Error adding user:", error);
-//     }
-//   };
-
-//   // Delete user
-//   const handleDelete = async (id) => {
-//     try {
-//       await axios.delete(`http://localhost:5000/admin/users/${id}`);
-//       fetchUsers();
-//     } catch (error) {
-//       console.error("Error deleting user:", error);
-//     }
-//   };
-
-//   return (
-//     <div className="user-management-container">
-//       <h2>User Management</h2>
-
-//       <div className="form-section">
-//         <input
-//           type="text"
-//           name="username"
-//           placeholder="Username"
-//           value={newUser.username}
-//           onChange={handleInputChange}
-//         />
-//         <input
-//           type="password"
-//           name="password"
-//           placeholder="Password"
-//           value={newUser.password}
-//           onChange={handleInputChange}
-//         />
-//         <select name="role" value={newUser.role} onChange={handleInputChange}>
-//           <option value="">Select Role</option>
-//           <option value="employee">Employee</option>
-//           <option value="manager">Manager</option>
-//           <option value="admin">Admin</option>
-//         </select>
-//         <button onClick={handleAddUser}>Add User</button>
-//       </div>
-
-//       <table className="user-table">
-//         <thead>
-//           <tr>
-//             <th>Username</th>
-//             <th>Role</th>
-//             <th>Actions</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {users.map((u) => (
-//             <tr key={u._id}>
-//               <td>{u.username}</td>
-//               <td>{u.role}</td>
-//               <td>
-//                 <button className="delete-btn" onClick={() => handleDelete(u._id)}>
-//                   Delete
-//                 </button>
-//                 {/* Optional: Add Edit button later */}
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default UserManagement;
-
-
-
-
-
-
-
-
-
-
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -135,7 +12,7 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/admin/users");
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/users`);
       setUsers(res.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -157,7 +34,11 @@ const UserManagement = () => {
         return;
       }
 
-      await axios.post("http://localhost:5000/admin/users1", newUser);
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/admin/users1`,
+        newUser 
+      );
+      
       fetchUsers();
       setNewUser({ username: "", password: "", role: "" });
     } catch (error) {
@@ -167,7 +48,10 @@ const UserManagement = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/admin/users/${id}`);
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/admin/users/${id}`
+      );
+      
       fetchUsers();
     } catch (error) {
       console.error("Error deleting user:", error);

@@ -1,95 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import "./MyTasks.css";
-
-// const MyTasks = () => {
-//   const [tasks, setTasks] = useState([]);
-
-//   useEffect(() => {
-//     const fetchTasks = async () => {
-//       const username = localStorage.getItem("username");
-//       try {
-//         const response = await fetch(`http://localhost:5000/employee-tasks/${username}`);
-//         const data = await response.json();
-
-//         if (!Array.isArray(data)) {
-//           console.error("Unexpected response from server:", data);
-//           return;
-//         }
-
-//         const formattedTasks = data.map((t) => ({
-//           id: t._id,
-//           title: t.task,
-//           description: "No description provided",
-//           deadline: t.deadline,
-//           status: t.status || "Pending", // status from DB if available
-//         }));
-
-//         setTasks(formattedTasks);
-//       } catch (error) {
-//         console.error("Error fetching tasks:", error);
-//       }
-//     };
-
-//     fetchTasks();
-//   }, []);
-
-//   const handleComplete = async (taskId) => {
-//     try {
-//       const response = await fetch(`http://localhost:5000/complete-task/${taskId}`, {
-//         method: "PUT",
-//       });
-
-//       if (response.ok) {
-//         setTasks((prevTasks) =>
-//           prevTasks.map((task) =>
-//             task.id === taskId ? { ...task, status: "Completed" } : task
-//           )
-//         );
-//       } else {
-//         console.error("Failed to mark task as completed");
-//       }
-//     } catch (error) {
-//       console.error("Error completing task:", error);
-//     }
-//   };
-
-//   return (
-//     <div className="my-tasks">
-//       <h2>My Tasks</h2>
-//       {tasks.length === 0 ? (
-//         <p>No tasks assigned yet.</p>
-//       ) : (
-//         <div className="task-list">
-//           {tasks.map((task) => (
-//             <div key={task.id} className={`task-card ${task.status.toLowerCase()}`}>
-//               <h3>{task.title}</h3>
-//               <p>{task.description}</p>
-//               <p><strong>Deadline:</strong> {task.deadline}</p>
-//               <p><strong>Status:</strong> {task.status}</p>
-//               {task.status !== "Completed" && (
-//                 <button className="complete-btn" onClick={() => handleComplete(task.id)}>
-//                   Mark as Complete
-//                 </button>
-//               )}
-//             </div>
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default MyTasks;
-
-
-
-
-
-
-
-
-
-
 
 
 import React, { useState, useEffect } from "react";
@@ -101,7 +9,10 @@ const MyTasks = () => {
     const fetchTasks = async () => {
       const username = localStorage.getItem("username");
       try {
-        const response = await fetch(`http://localhost:5000/employee-tasks/${username}`);
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/employee-tasks/${username}`
+        );
+        
         const data = await response.json();
 
         if (!Array.isArray(data)) {
@@ -128,7 +39,8 @@ const MyTasks = () => {
 
   const handleComplete = async (taskId) => {
     try {
-      const response = await fetch(`http://localhost:5000/complete-task/${taskId}`, {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/complete-task/${taskId}`, {
         method: "PUT",
       });
 

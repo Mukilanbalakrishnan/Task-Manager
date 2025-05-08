@@ -8,7 +8,7 @@ const PerformanceReview = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await fetch("http://localhost:5000/performance/employee", {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/performance/employee`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

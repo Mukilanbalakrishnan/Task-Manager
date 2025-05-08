@@ -1,92 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-
-// // import "./LeaveApproval.css";
-
-// const LeaveApproval = () => {
-//   const [leaves, setLeaves] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     fetchLeaves();
-//   }, []);
-
-//   const fetchLeaves = async () => {
-//     try {
-//       const response = await fetch("http://localhost:5000/leave/all");
-//       const data = await response.json();
-//       setLeaves(data);
-//     } catch (error) {
-//       console.error("Error fetching leave requests:", error);
-//       setError("Failed to fetch leave requests.");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const handleAction = async (id, status) => {
-//     try {
-//       const res = await axios.post("http://localhost:5000/leave/status", {
-//         id,    
-//         status,  
-//       });
-//       alert(res.data.message);
-//       fetchLeaves(); // refresh the list
-//     } catch (error) {
-//       console.error("Error updating status:", error);
-//     }
-//   };
-//   if (loading) return <p>Loading leave requests...</p>;
-//   if (error) return <p className="error">{error}</p>;
-
-//   return (
-//     <div className="leave-approval-container">
-//       <h2>Leave Requests</h2>
-//       <table className="leave-table">
-//         <thead>
-//           <tr>
-//             <th>Username</th>
-//             <th>From</th>
-//             <th>To</th>
-//             <th>Type</th>
-//             <th>Reason</th>
-//             <th>Status</th>
-//             <th>Action</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {leaves.map((leave) => (
-//             <tr key={leave._id}>
-//               <td>{leave.username}</td>
-//               <td>{leave.fromDate}</td>
-//               <td>{leave.toDate}</td>
-//               <td>{leave.leaveType}</td>
-//               <td>{leave.reason}</td>
-//               <td className={leave.status.toLowerCase()}>{leave.status}</td>
-//               <td>
-//                 {leave.status === "pending" ? (
-//                   <>
-//                   <button onClick={() => handleAction(leave._id, "approved")}>Approve</button>
-// <button onClick={() => handleAction(leave._id, "rejected")}>Reject</button>
-
-//                   </>
-//                 ) : (
-//                   "-"
-//                 )}
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default LeaveApproval;
-
-
-
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -102,7 +13,7 @@ const LeaveApproval = () => {
 
   const fetchLeaves = async () => {
     try {
-      const response = await fetch("http://localhost:5000/leave/all");
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/leave/all`);
       const data = await response.json();
       setLeaves(data);
     } catch (error) {
@@ -115,7 +26,8 @@ const LeaveApproval = () => {
 
   const handleAction = async (id, status) => {
     try {
-      const res = await axios.post("http://localhost:5000/leave/status", {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/leave/status`, {
         id,
         status,
       });

@@ -1,89 +1,3 @@
-// import React, { useEffect, useState } from "react";
-
-// const AdminLeaveApproval = () => {
-//   const [leaves, setLeaves] = useState([]);
-
-//   useEffect(() => {
-//     fetch("http://localhost:5000/admin/leave-requests")
-//       .then((res) => res.json())
-//       .then((data) => setLeaves(data))
-//       .catch((err) => console.error("Fetch error:", err));
-//   }, []);
-
-//   const handleApproval = async (userId, action) => {
-//     try {
-//       const res = await fetch(`http://localhost:5000/admin/leave-update/${userId}`, {
-//         method: "PUT",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ status: action }),
-//       });
-
-//       if (res.ok) {
-//         const updated = leaves.map((leave) =>
-//           leave.userId._id === userId && leave.status === "pending"
-//             ? { ...leave, status: action }
-//             : leave
-//         );
-//         setLeaves(updated);
-//       } else {
-//         const err = await res.json();
-//         alert(err.message);
-//       }
-//     } catch (error) {
-//       console.error("Approval error:", error);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h2>Admin Leave Approval</h2>
-//       <table>
-//         <thead>
-//           <tr>
-//             <th>Name</th>
-//             <th>Role</th>
-//             <th>From</th>
-//             <th>To</th>
-//             <th>Type</th>
-//             <th>Reason</th>
-//             <th>Status</th>
-//             <th>Action</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {leaves.map((leave) => (
-//             <tr key={leave._id}>
-//               <td>{leave.userId?.username || "—"}</td>
-//               <td>{leave.userId?.role || "—"}</td>
-//               <td>{leave.fromDate}</td>
-//               <td>{leave.toDate}</td>
-//               <td>{leave.leaveType}</td>
-//               <td>{leave.reason}</td>
-//               <td>{leave.status}</td>
-//               <td>
-//                 {leave.status === "pending" && (
-//                   <>
-//                     <button onClick={() => handleApproval(leave.userId._id, "approved")}>
-//                       Approve
-//                     </button>
-//                     <button onClick={() => handleApproval(leave.userId._id, "rejected")}>
-//                       Reject
-//                     </button>
-//                   </>
-//                 )}
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default AdminLeaveApproval;
-
-
-
 
 import React, { useEffect, useState } from "react";
 
@@ -91,15 +5,16 @@ const AdminLeaveApproval = () => {
   const [leaves, setLeaves] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/leave-requests")
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/leave-requests`)
       .then((res) => res.json())
       .then((data) => setLeaves(data))
       .catch((err) => console.error("Fetch error:", err));
   }, []);
+  
 
   const handleApproval = async (userId, action) => {
     try {
-      const res = await fetch(`http://localhost:5000/admin/leave-update/${userId}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/leave-update/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: action }),

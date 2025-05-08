@@ -1,155 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
-
-// export default function MarkAttendance() {
-//   const [username] = useState(localStorage.getItem("username"));
-//   const [attendance, setAttendance] = useState(null);
-//   const [selectedDate, setSelectedDate] = useState(new Date());
-
-//   const todayStr = new Date().toISOString().split("T")[0];
-//   const selectedStr = selectedDate.toISOString().split("T")[0];
-//   const isToday = selectedStr === todayStr;
-
-//   const fetchAttendance = async (date) => {
-//     const dateStr = date.toISOString().split("T")[0];
-//     try {
-//       const res = await fetch(`http://localhost:5000/attendance/view?username=${username}&date=${dateStr}`);
-      
-//       if (res.status === 404) {
-//         setAttendance(null); // No data for this date
-//         return;
-//       }
-
-//       const data = await res.json();
-//       setAttendance(data);
-//     } catch (err) {
-//       console.error("Failed to fetch attendance:", err);
-//       setAttendance(null); // fallback
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchAttendance(selectedDate);
-//   }, [selectedDate]);
-
-//   const handleAction = async (type) => {
-//     try {
-//       const res = await fetch(`http://localhost:5000/attendance/${type}`, {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ username }),
-//       });
-//       const data = await res.json();
-//       alert(data.message);
-//       fetchAttendance(selectedDate);
-//     } catch (err) {
-//       console.error(`Error during ${type}:`, err);
-//     }
-//   };
-
-//   const getTotalTime = () => {
-//     if (!attendance?.checkIn || !attendance?.checkOut) return { work: "-", break: "-" };
-
-//     const [h1, m1, s1 = 0] = attendance.checkIn.split(":").map(Number);
-//     const [h2, m2, s2 = 0] = attendance.checkOut.split(":").map(Number);
-
-//     const start = new Date();
-//     const end = new Date();
-//     start.setHours(h1, m1, s1);
-//     end.setHours(h2, m2, s2);
-
-//     const totalMs = end - start;
-
-//     const breakMs = attendance.breaks.reduce((total, b) => {
-//       if (b.inTime && b.outTime) {
-//         const [oh, om] = b.outTime.split(":").map(Number);
-//         const [ih, im] = b.inTime.split(":").map(Number);
-//         const out = new Date();
-//         const _in = new Date();
-//         out.setHours(oh, om, 0);
-//         _in.setHours(ih, im, 0);
-//         return total + (_in - out);
-//       }
-//       return total;
-//     }, 0);
-
-//     const workMs = totalMs - breakMs;
-
-//     const workH = Math.floor(workMs / (1000 * 60 * 60));
-//     const workM = Math.floor((workMs % (1000 * 60 * 60)) / (1000 * 60));
-//     const breakMins = Math.floor(breakMs / 60000);
-
-//     return {
-//       work: `${workH}h ${workM}m`,
-//       break: `${breakMins} mins`,
-//     };
-//   };
-
-//   const { work, break: breakTime } = getTotalTime();
-
-//   return (
-//     <div style={{ padding: "1rem" }}>
-//       <h2>My Attendance</h2>
-
-//       {/* Action Buttons - Only show for today's date */}
-//       {isToday && (
-//         <div style={{ marginBottom: "1rem" }}>
-//           <button onClick={() => handleAction("checkin")}>Check In</button>{" "}
-//           <button onClick={() => handleAction("goout")}>Go Out</button>{" "}
-//           <button onClick={() => handleAction("comein")}>Come In</button>{" "}
-//           <button onClick={() => handleAction("checkout")}>Check Out</button>
-//         </div>
-//       )}
-
-//       {/* Date Picker */}
-//       <div style={{ marginBottom: "1rem" }}>
-//         <label><strong>Select Date:</strong> </label>
-//         <DatePicker selected={selectedDate} onChange={(date) => setSelectedDate(date)} />
-//       </div>
-
-//       {/* Attendance Table */}
-//       {attendance ? (
-//         <table border="1" cellPadding="10" style={{ borderCollapse: "collapse", width: "100%" }}>
-//           <thead>
-//             <tr style={{ background: "#f0f0f0" }}>
-//               <th>Date</th>
-//               <th>Check-In</th>
-//               <th>Check-Out</th>
-//               <th>Breaks (Out → In)</th>
-//               <th>Total Work Time</th>
-//               <th>Total Break Time</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             <tr>
-//               <td>{attendance.date}</td>
-//               <td>{attendance.checkIn || "-"}</td>
-//               <td>{attendance.checkOut || "-"}</td>
-//               <td>
-//                 {attendance.breaks.length === 0
-//                   ? "None"
-//                   : attendance.breaks.map((b, i) => (
-//                       <div key={i}>
-//                         {b.outTime || "-"} → {b.inTime || "-"}
-//                       </div>
-//                     ))}
-//               </td>
-//               <td>{work}</td>
-//               <td>{breakTime}</td>
-//             </tr>
-//           </tbody>
-//         </table>
-//       ) : (
-//         <p>No attendance record for selected date.</p>
-//       )}
-//     </div>
-//   );
-// }
-
-
-
-
 
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
@@ -167,7 +15,9 @@ export default function MarkAttendance() {
   const fetchAttendance = async (date) => {
     const dateStr = date.toISOString().split("T")[0];
     try {
-      const res = await fetch(`http://localhost:5000/attendance/view?username=${username}&date=${dateStr}`);
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/attendance/view?username=${username}&date=${dateStr}`
+      );
       if (res.status === 404) {
         setAttendance(null);
         return;
@@ -186,7 +36,8 @@ export default function MarkAttendance() {
 
   const handleAction = async (type) => {
     try {
-      const res = await fetch(`http://localhost:5000/attendance/${type}`, {
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/attendance/${type}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username }),

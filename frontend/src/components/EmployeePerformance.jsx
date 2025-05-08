@@ -1,49 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import "./EmployeePerformance.css";
-
-// const EmployeePerformance = () => {
-//   const [tasks, setTasks] = useState([]);
-
-//   useEffect(() => {
-//     const fetchAllTasks = async () => {
-//       try {
-//         const response = await fetch("http://localhost:5000/all-tasks");
-//         const data = await response.json();
-//         setTasks(data);
-//       } catch (error) {
-//         console.error("Error fetching tasks:", error);
-//       }
-//     };
-
-//     fetchAllTasks();
-//   }, []);
-
-//   return (
-//     <div className="manager-tasks">
-//       <h2>All Employee Tasks</h2>
-//       {tasks.length === 0 ? (
-//         <p>No tasks found.</p>
-//       ) : (
-//         <div className="task-list">
-//           {tasks.map((task) => (
-//             <div key={task._id} className={`task-card ${task.status.toLowerCase()}`}>
-//               <h3>{task.task}</h3>
-//               <p><strong>Assigned To:</strong> {task.assignee?.username}</p>
-//               <p><strong>Deadline:</strong> {task.deadline}</p>
-//               <p><strong>Status:</strong> {task.status}</p>
-//             </div>
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default EmployeePerformance;
-
-
-
-
 
 import React, { useEffect, useState } from "react";
 
@@ -53,7 +7,8 @@ const EmployeePerformance = () => {
   useEffect(() => {
     const fetchAllTasks = async () => {
       try {
-        const response = await fetch("http://localhost:5000/all-tasks");
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/all-tasks`);
+
         const data = await response.json();
         setTasks(data);
       } catch (error) {

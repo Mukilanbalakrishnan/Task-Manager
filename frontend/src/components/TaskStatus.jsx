@@ -9,7 +9,8 @@ const TaskStatus = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/tasks/employee/${username}`, {
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/tasks/employee/${username}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

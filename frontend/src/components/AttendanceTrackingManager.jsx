@@ -1,165 +1,3 @@
-// import React, { useEffect, useState } from "react";
-
-// export default function ManagerDashboard() {
-//   const username = localStorage.getItem("username");
-//   const role = localStorage.getItem("role");
-//   const [attendanceRecords, setAttendanceRecords] = useState([]);
-//   const [myAttendance, setMyAttendance] = useState(null);
-
-//   const fetchAttendanceData = async () => {
-//     const today = new Date().toISOString().split("T")[0];
-//     try {
-//       // Fetch manager's own attendance
-//       const myRes = await fetch(`http://localhost:5000/attendance/view?username=${username}&date=${today}`);
-//       const myData = await myRes.json();
-//       setMyAttendance(myData);
-//     } catch (err) {
-//       console.error("Error fetching manager attendance:", err);
-//     }
-
-//     try {
-//       // Fetch all employee attendance for manager
-//       const empRes = await fetch("http://localhost:5000/manager-attendance");
-//       const empData = await empRes.json();
-//       setAttendanceRecords(empData);
-//     } catch (err) {
-//       console.error("Error fetching employee attendance:", err);
-//     }
-//   };
-
-//   useEffect(() => {
-//     if (role === "manager") {
-//       fetchAttendanceData();
-//     }
-//   }, [username, role]);
-
-//   const handleAction = async (type) => {
-//     try {
-//       const res = await fetch(`http://localhost:5000/attendance/${type === "checkin" ? "manager-checkin" : type}`, {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ username, managerName: username }),
-//       });
-//       const data = await res.json();
-//       alert(data.message);
-//       fetchAttendanceData(); // Refresh attendance after action
-//     } catch (err) {
-//       console.error(`Error during ${type}:`, err);
-//     }
-//   };
-
-//   return (
-//     <div style={{ display: "flex", height: "100vh", fontFamily: "Arial, sans-serif" }}>
-    
-//       {/* Main Content */}
-//       <p><strong>User:</strong> {username}</p>
-//       <div style={{ flexGrow: 1, padding: "2rem", background: "#f8fafc" }}>
-//         <h2 style={{ marginTop: 0 }}>Welcome, {username} 👋</h2>
-
-//         {/* Manager Attendance Controls */}
-//         <section style={{ marginBottom: "2rem" }}>
-//           <h3>Mark My Attendance</h3>
-//           <div style={{ marginBottom: "1rem" }}>
-//             <button onClick={() => handleAction("checkin")} style={btnStyle}>Check In</button>{" "}
-//             <button onClick={() => handleAction("goout")} style={btnStyle}>Go Out</button>{" "}
-//             <button onClick={() => handleAction("comein")} style={btnStyle}>Come In</button>{" "}
-//             <button onClick={() => handleAction("checkout")} style={btnStyle}>Check Out</button>
-//           </div>
-
-//           {myAttendance ? (
-//             <table style={tableStyle}>
-//               <thead>
-//                 <tr>
-//                   <th>Date</th>
-//                   <th>Check-In</th>
-//                   <th>Check-Out</th>
-//                   <th>Breaks</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 <tr>
-//                   <td>{myAttendance.date}</td>
-//                   <td>{myAttendance.checkIn || "-"}</td>
-//                   <td>{myAttendance.checkOut || "-"}</td>
-//                   <td>
-//                     {myAttendance.breaks?.length > 0
-//                       ? myAttendance.breaks.map((b, i) => (
-//                           <div key={i}>{b.outTime || "-"} → {b.inTime || "-"}</div>
-//                         ))
-//                       : "None"}
-//                   </td>
-//                 </tr>
-//               </tbody>
-//             </table>
-//           ) : (
-//             <p>No attendance for today.</p>
-//           )}
-//         </section>
-
-//         {/* Employee Attendance Records */}
-//         <section>
-//           <h3>Employee Attendance Records</h3>
-//           <table style={tableStyle}>
-//             <thead>
-//               <tr>
-//                 <th>Username</th>
-//                 <th>Date</th>
-//                 <th>Check-In</th>
-//                 <th>Check-Out</th>
-//                 <th>Breaks</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {attendanceRecords.map((record, i) => (
-//                 <tr key={i}>
-//                   <td>{record.username}</td>
-//                   <td>{record.date}</td>
-//                   <td>{record.checkIn || "-"}</td>
-//                   <td>{record.checkOut || "-"}</td>
-//                   <td>
-//                     {record.breaks?.length > 0
-//                       ? record.breaks.map((b, idx) => (
-//                           <div key={idx}>{b.outTime || "-"} → {b.inTime || "-"}</div>
-//                         ))
-//                       : "None"}
-//                   </td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </section>
-//       </div>
-//     </div>
-//   );
-// }
-
-// const btnStyle = {
-//   padding: "0.5rem 1rem",
-//   marginRight: "0.5rem",
-//   border: "none",
-//   borderRadius: "5px",
-//   background: "#3b82f6",
-//   color: "white",
-//   cursor: "pointer",
-// };
-
-// const tableStyle = {
-//   width: "100%",
-//   borderCollapse: "collapse",
-//   backgroundColor: "#fff",
-//   boxShadow: "0 0 8px rgba(0,0,0,0.1)",
-// };
-
-// const thtdStyle = {
-//   border: "1px solid #ccc",
-//   padding: "0.5rem",
-// };
-
-
-
-
-
-
 
 import React, { useEffect, useState } from "react";
 
@@ -172,7 +10,9 @@ export default function ManagerDashboard() {
   const fetchAttendanceData = async () => {
     const today = new Date().toISOString().split("T")[0];
     try {
-      const myRes = await fetch(`http://localhost:5000/attendance/view?username=${username}&date=${today}`);
+      const myRes = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/attendance/view?username=${username}&date=${today}`
+      );
       const myData = await myRes.json();
       setMyAttendance(myData);
     } catch (err) {
@@ -180,7 +20,9 @@ export default function ManagerDashboard() {
     }
 
     try {
-      const empRes = await fetch("http://localhost:5000/manager-attendance");
+      const empRes = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/manager-attendance`
+      );
       const empData = await empRes.json();
       setAttendanceRecords(empData);
     } catch (err) {
@@ -196,7 +38,8 @@ export default function ManagerDashboard() {
 
   const handleAction = async (type) => {
     try {
-      const res = await fetch(`http://localhost:5000/attendance/${type === "checkin" ? "manager-checkin" : type}`, {
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/attendance/${type === "checkin" ? "manager-checkin" : type}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, managerName: username }),

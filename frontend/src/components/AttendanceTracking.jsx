@@ -6,7 +6,8 @@ const AttendanceTrackingAdmin = () => {
   useEffect(() => {
     const fetchAllAttendance = async () => {
       try {
-        const res = await fetch("http://localhost:5000/attendance/all");
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/attendance/all`);
+
         const data = await res.json();
         setRecords(data);
       } catch (err) {

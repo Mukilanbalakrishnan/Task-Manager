@@ -23,7 +23,7 @@ const AdminAssignPayroll = () => {
     setMessage("");
 
     try {
-      await axios.post("http://localhost:5000/admin/payroll", formData);
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/admin/payroll`, formData);
       setMessage("Payroll assigned successfully!");
       setFormData({
         username: "",
