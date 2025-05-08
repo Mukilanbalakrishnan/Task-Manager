@@ -17,6 +17,15 @@ mongoose.connect("mongodb+srv://visara1327:bp2ZiF4n9Ri7lyD7@mycluster.w0gv3.mong
 .catch((err) => console.error("Error connecting to MongoDB Atlas:", err));
 
 
+app.use(cors({
+  origin: ["http://localhost:5173", "https://emstaskmanager.netlify.app"],
+  credentials: true,
+}));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
 // ------------------ SCHEMAS ------------------
 // User Schema: stores login credentials and role
 const UserSchema = new mongoose.Schema({
