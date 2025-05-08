@@ -1,0 +1,59 @@
+.attendance-tracking-manager {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .attendance-tracking-manager h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2d6cdf;
+  }
+  
+  .employee-selector {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+  }
+  
+  .employee-selector label {
+    font-weight: bold;
+  }
+  
+  .employee-selector select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .attendance-table th,
+  .attendance-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .attendance-table th {
+    background-color: #f4f6f8;
+  }
+  
+  .present {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .absent {
+    color: red;
+    font-weight: bold;
+  }
+  

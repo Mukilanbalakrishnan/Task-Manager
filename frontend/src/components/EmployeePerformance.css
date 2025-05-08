@@ -1,0 +1,27 @@
+.performance-container {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.performance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.performance-table th,
+.performance-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.performance-table .rating.good {
+  color: green;
+  font-weight: bold;
+}
+
+.performance-table .rating.average {
+  color: orange;
+  font-weight: bold;
+}

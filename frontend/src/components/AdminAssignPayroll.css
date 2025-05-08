@@ -1,0 +1,54 @@
+.payroll-management {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .payroll-management h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #1a1a3d;
+  }
+  
+  .payroll-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .payroll-table th,
+  .payroll-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .payroll-table tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .paid {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .unpaid {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .payroll-table button {
+    padding: 5px 10px;
+    background-color: #2d6cdf;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .payroll-table button:hover {
+    background-color: #1a4bbb;
+  }
+  
