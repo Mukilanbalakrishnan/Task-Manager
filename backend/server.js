@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
 mongoose.connect("mongodb+srv://visara1327:bp2ZiF4n9Ri7lyD7@mycluster.w0gv3.mongodb.net/Ems?retryWrites=true&w=majority", {
   useNewUrlParser: true,
